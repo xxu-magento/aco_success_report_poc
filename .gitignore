@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.venv/
+env/
+
+# VSCode/PyCharm
+.vscode/
+.idea/
+
+# Jupyter & data
+*.ipynb
+data/**.json
+final_report.json
+
+# Secrets / env files
+.env
+
+# OS cruft
+.DS_Store
+Thumbs.db

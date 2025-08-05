@@ -1,0 +1,233 @@
+{
+  "start_date": "2025-07-17",
+  "end_date": "2025-07-30",
+  "reference_metrics": [
+    {
+      "date": "2025-07-03",
+      "bounce_rate": 36.9,
+      "conversion_rate": 7.4,
+      "revenue": 30150.75,
+      "search_conversion_rate": 11.8,
+      "unique_visitors": 7580
+    },
+    {
+      "date": "2025-07-04",
+      "bounce_rate": 35.2,
+      "conversion_rate": 7.8,
+      "revenue": 33850,
+      "search_conversion_rate": 14.3,
+      "unique_visitors": 9180
+    },
+    {
+      "date": "2025-07-05",
+      "bounce_rate": 34.6,
+      "conversion_rate": 7.3,
+      "revenue": 30480.25,
+      "search_conversion_rate": 11.9,
+      "unique_visitors": 7680
+    },
+    {
+      "date": "2025-07-06",
+      "bounce_rate": 36.3,
+      "conversion_rate": 7.5,
+      "revenue": 31120.5,
+      "search_conversion_rate": 12.7,
+      "unique_visitors": 8220
+    },
+    {
+      "date": "2025-07-07",
+      "bounce_rate": 35.7,
+      "conversion_rate": 7.6,
+      "revenue": 31650.75,
+      "search_conversion_rate": 13.2,
+      "unique_visitors": 8680
+    },
+    {
+      "date": "2025-07-08",
+      "bounce_rate": 34.4,
+      "conversion_rate": 7.8,
+      "revenue": 32180,
+      "search_conversion_rate": 13.8,
+      "unique_visitors": 9180
+    },
+    {
+      "date": "2025-07-09",
+      "bounce_rate": 35.1,
+      "conversion_rate": 8.2,
+      "revenue": 39520.25,
+      "search_conversion_rate": 18.4,
+      "unique_visitors": 12480
+    },
+    {
+      "date": "2025-07-10",
+      "bounce_rate": 36.8,
+      "conversion_rate": 8,
+      "revenue": 38850.5,
+      "search_conversion_rate": 17.6,
+      "unique_visitors": 11820
+    },
+    {
+      "date": "2025-07-11",
+      "bounce_rate": 35.5,
+      "conversion_rate": 8.1,
+      "revenue": 39180.75,
+      "search_conversion_rate": 18.1,
+      "unique_visitors": 12280
+    },
+    {
+      "date": "2025-07-12",
+      "bounce_rate": 34.2,
+      "conversion_rate": 8.3,
+      "revenue": 39950,
+      "search_conversion_rate": 19.2,
+      "unique_visitors": 13180
+    },
+    {
+      "date": "2025-07-13",
+      "bounce_rate": 35.9,
+      "conversion_rate": 8.1,
+      "revenue": 39280.25,
+      "search_conversion_rate": 18.4,
+      "unique_visitors": 12480
+    },
+    {
+      "date": "2025-07-14",
+      "bounce_rate": 36.6,
+      "conversion_rate": 8.6,
+      "revenue": 44620.5,
+      "search_conversion_rate": 22.8,
+      "unique_visitors": 16220
+    },
+    {
+      "date": "2025-07-15",
+      "bounce_rate": 35.3,
+      "conversion_rate": 8.8,
+      "revenue": 45950.75,
+      "search_conversion_rate": 24.6,
+      "unique_visitors": 17680
+    },
+    {
+      "date": "2025-07-16",
+      "bounce_rate": 34.1,
+      "conversion_rate": 8.9,
+      "revenue": 46280,
+      "search_conversion_rate": 25.1,
+      "unique_visitors": 18120
+    }
+  ],
+  "current_metrics": [
+    {
+      "date": "2025-07-17",
+      "bounce_rate": 35.7,
+      "conversion_rate": 9.1,
+      "revenue": 46620.25,
+      "search_conversion_rate": 25.8,
+      "unique_visitors": 18780
+    },
+    {
+      "date": "2025-07-18",
+      "bounce_rate": 36.4,
+      "conversion_rate": 9,
+      "revenue": 46950.5,
+      "search_conversion_rate": 26.2,
+      "unique_visitors": 19220
+    },
+    {
+      "date": "2025-07-19",
+      "bounce_rate": 34.8,
+      "conversion_rate": 8.7,
+      "revenue": 42280.75,
+      "search_conversion_rate": 21.9,
+      "unique_visitors": 15880
+    },
+    {
+      "date": "2025-07-20",
+      "bounce_rate": 35.5,
+      "conversion_rate": 8.6,
+      "revenue": 42150,
+      "search_conversion_rate": 21.6,
+      "unique_visitors": 15520
+    },
+    {
+      "date": "2025-07-21",
+      "bounce_rate": 36.9,
+      "conversion_rate": 8.8,
+      "revenue": 42480.25,
+      "search_conversion_rate": 22.1,
+      "unique_visitors": 16180
+    },
+    {
+      "date": "2025-07-22",
+      "bounce_rate": 35.6,
+      "conversion_rate": 9,
+      "revenue": 42820.5,
+      "search_conversion_rate": 22.7,
+      "unique_visitors": 16820
+    },
+    {
+      "date": "2025-07-23",
+      "bounce_rate": 34.3,
+      "conversion_rate": 9.2,
+      "revenue": 43150.75,
+      "search_conversion_rate": 23.4,
+      "unique_visitors": 17380
+    },
+    {
+      "date": "2025-07-24",
+      "bounce_rate": 35.1,
+      "conversion_rate": 9.3,
+      "revenue": 43480,
+      "search_conversion_rate": 23.9,
+      "unique_visitors": 17880
+    },
+    {
+      "date": "2025-07-25",
+      "bounce_rate": 36.8,
+      "conversion_rate": 9.5,
+      "revenue": 43820.25,
+      "search_conversion_rate": 24.5,
+      "unique_visitors": 18420
+    },
+    {
+      "date": "2025-07-26",
+      "bounce_rate": 35.5,
+      "conversion_rate": 9.4,
+      "revenue": 44150.5,
+      "search_conversion_rate": 25.1,
+      "unique_visitors": 18980
+    },
+    {
+      "date": "2025-07-27",
+      "bounce_rate": 34.2,
+      "conversion_rate": 9.8,
+      "revenue": 49480.75,
+      "search_conversion_rate": 29.8,
+      "unique_visitors": 23180
+    },
+    {
+      "date": "2025-07-28",
+      "bounce_rate": 35.4,
+      "conversion_rate": 10.2,
+      "revenue": 56820,
+      "search_conversion_rate": 36.2,
+      "unique_visitors": 28820
+    },
+    {
+      "date": "2025-07-29",
+      "bounce_rate": 36.1,
+      "conversion_rate": 10.4,
+      "revenue": 57150.25,
+      "search_conversion_rate": 36.8,
+      "unique_visitors": 29480
+    },
+    {
+      "date": "2025-07-30",
+      "bounce_rate": 34.8,
+      "conversion_rate": 10.6,
+      "revenue": 57480.5,
+      "search_conversion_rate": 37.4,
+      "unique_visitors": 30120
+    }
+  ],
+  "initiatives": []
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Impact-Analyzer Output",
+  "type": "object",
+  "minProperties": 1,
+  "additionalProperties": false,
+
+  "properties": {
+    "NO_INITIATIVE": { "$ref": "#/definitions/initiativeBlock" }
+  },
+
+  "patternProperties": {
+    "^INIT_[A-Za-z0-9]+$": { "$ref": "#/definitions/initiativeBlock" }
+  },
+
+  "definitions": {
+    "initiativeBlock": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "initiative_name": { "type": "string" },
+        "Traffic":     { "$ref": "#/definitions/dimensionBlock" },
+        "Engagement":  { "$ref": "#/definitions/dimensionBlock" },
+        "Conversions": { "$ref": "#/definitions/dimensionBlock" },
+        "Revenue":     { "$ref": "#/definitions/dimensionBlock" }
+      },
+      "required": ["initiative_name", "Traffic", "Engagement", "Conversions", "Revenue"]
+    },
+
+    "dimensionBlock": {
+      "type": "object",
+      "required": ["metrics"],
+      "additionalProperties": false,
+      "properties": {
+        "metrics": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/definitions/metricEntry" }
+        },
+        "discarded": {                        
+          "type": "array",
+          "items": { "$ref": "#/definitions/discardedEntry" }
+        }
+      }
+    },
+
+    "metricEntry": {
+      "type": "object",
+      "required": [
+        "current_avg",
+        "change",
+        "initiative_sig",
+        "overall_sig",
+        "explanation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "current_avg": { "type": "number" },
+        "change":      { "type": "string" },
+        "initiative_sig":      { "type": "boolean" },
+        "overall_sig":      { "type": "boolean" },
+        "explanation": { "type": "string" }
+      }
+    },
+
+    "discardedEntry": {                       
+      "type": "object",
+      "required": ["metric_code", "change", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "metric_code": { "type": "string" },
+        "change":      { "type": "string" },
+        "reason":      { "type": "string" }
+      } 
+    }
+  }
+}

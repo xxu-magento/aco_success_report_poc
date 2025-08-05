@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ACO Success Metrics Report Stories Data Schema",
+  "type": "object",
+  "required": [
+    "Top Highlights",
+    "Traffic",
+    "Engagement",
+    "Conversions",
+    "Revenue"
+  ],
+  "additionalProperties": false,
+
+  "properties": {
+    "Top Highlights": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["dimension", "metric", "change", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": ["Traffic", "Engagement", "Conversions", "Revenue"]
+          },
+          "metric":  { "type": "string" },
+          "change":  { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+
+    "Traffic":     { "$ref": "#/definitions/dimensionBlock" },
+    "Engagement":  { "$ref": "#/definitions/dimensionBlock" },
+    "Conversions": { "$ref": "#/definitions/dimensionBlock" },
+    "Revenue":     { "$ref": "#/definitions/dimensionBlock" }
+  },
+
+  "definitions": {
+    "dimensionBlock": {
+      "type": "object",
+      "required": ["insight_summary", "metrics"],
+      "additionalProperties": false,
+      "properties": {
+        "insight_summary": { "type": "string" },
+        "metrics": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/definitions/metricEntry" }
+        }
+      }
+    },
+
+    "metricEntry": {
+      "type": "object",
+      "required": [
+        "current_avg",
+        "change",
+        "explanation",
+        "last_updated",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "current_avg": { "type": "number" },
+        "change":      { "type": "string" },
+        "explanation": { "type": "string" },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source": {
+          "type": "string",
+          "const": "Storefront Events"
+        }
+      }
+    }
+  }
+}
