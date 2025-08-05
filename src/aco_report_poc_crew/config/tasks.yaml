@@ -9,7 +9,7 @@ analyze_impact_attribution_task:
       {
         "<initiative_id|NO_INITIATIVE>": {
           "initiative_name": "<string>",
-          "<dimension>": {
+          "overall": {
             "metrics": {
               "<metric_code>": {
                 "current_avg": <number>,
@@ -20,10 +20,15 @@ analyze_impact_attribution_task:
               }
             }
           }
-        }
+        },
+        "initiatives":[...]
       }
-    • Update the in the corresponding value in the "explanation" per the json file, and rephrase the explanation in a friendly, engaging, and clear tone.
-    • Do not make up numbers, initiatives, and facts.
+    • If initiatives list from the input is not empty ->  
+      For every metric inside overall.metrics:
+      • Look up the matching object in initiatives (same initiative_id).
+      • Enrich the existing explanation with any extra context provided for that initiative.
+      • Rephrase each updated explanation so it is friendly, engaging, and crystal-clear—no jargon.
+      • Never invent numbers, initiatives, or facts; only use data already in the JSON.
     • **Return** an object structured as:
          {
            "<initiative_id|NO_INITIATIVE>": {
@@ -48,7 +53,8 @@ analyze_impact_attribution_task:
   expected_output: >
     # ----- TEMPLATE (initiative ID or "NO_INITIATIVE", repeated for each initiative and dimension) -----
     {
-      "<initiative_id>": {  
+      "<initiative_id|NO_INITIATIVE>": {  
+        "initiative_name": "<string>",
         "<dimension>": { 
           "metrics": {
             "<metric_code>": {  
@@ -64,7 +70,8 @@ analyze_impact_attribution_task:
     }
     # ----- Example (ACO Launch) -----
     {
-      "INIT_001": {                       
+      "INIT_001": {
+       "initiative_name": "ACO Launch",                       
         "Engagement": {
           "metrics": {
             "search_conversion_rate": {
@@ -122,20 +129,21 @@ analyze_impact_attribution_task:
       //   - each metric has a note about ongoing effects or seasonality
       //   - example below
       "NO_INITIATIVE": {
-            "Engagement": {
-              "metrics": {
-                "search_conversion_rate": {
-                  "current_avg": 7.1,
-                  "change": "-0.4%",
-                  "initiative_sig": false,
-                  "overall_sig": false,
-                  "explanation": "The change is very small and falls within the usual range, so it’s not meaningful."
-                }
-              }
-            },
-            "Traffic":     { ... },
-            "Conversions": { ... },
-            "Revenue":     { ... }
+        "initiative_name": "No Initiative",
+        "Engagement": {
+          "metrics": {
+            "search_conversion_rate": {
+              "current_avg": 7.1,
+              "change": "-0.4%",
+              "initiative_sig": false,
+              "overall_sig": false,
+              "explanation": "The change is very small (statistically) and falls within the usual range, so it's not meaningful."
+            }
+          }
+        },
+        "Traffic":     { ... },
+        "Conversions": { ... },
+        "Revenue":     { ... }
       }
     } 
 
@@ -208,7 +216,7 @@ generate_dimension_pages_task:
               “Change may be due to ongoing impact from earlier initiatives or external factors. Consider expanding the date window.”.
             Else →
               write the narrative exactly as the following 
-              "The change is very small and falls within the usual range, so it’s not meaningful."
+              "The change is very small (statistically) and falls within the usual range, so it's not meaningful."
 
         Else → 
             Write 2-3 sentence narrative linking the change to its related initiatives. 
@@ -302,7 +310,7 @@ combine_stories_task:
       • **highlights_json**   - output of *generate_top_highlights_task*
       • **dimensions_json**   - output of *generate_dimension_pages_task*
 
-    **Goal:** produce a single JSON object that contains:
+    **Goal:** produce a single JSON that contains:
 
       - Key **"Top Highlights"**   → value = highlights_json["Top Highlights"]
       - Keys **"Traffic"**, **"Engagement"**, **"Conversions"**, **"Revenue"**
@@ -311,7 +319,7 @@ combine_stories_task:
     Notes:
       • Do **not** rename or nest the result under any new key.
       • Preserve all numbers and text exactly as received.
-    Output the merged JSON object.
+    Output the merged stories_data JSON.
 
   expected_output: >
     # ----- TEMPLATE -----
@@ -343,8 +351,8 @@ validate_final_report_task:
   agent: report_validator_agent
   description: >
     Inputs:
-      • stories_data      JSON from the Story Generator (combine_stories_task)
-      • analyzer_insights   JSON from the Impact Analyzer
+      • stories_data      output from the Story Generator (combine_stories_task)
+      • analyzer_insights   output from the Impact Analyzer
     Steps:
       1. json_schema_check → flag structural errors. If it fails, the crew halts. 
       2. reference_matcher → ensure every metric_code, dimension, and
@@ -385,41 +393,35 @@ validate_final_report_task:
 # ---------- REPORT CORRECTOR --------------
 correct_report_with_validation_task:
   agent: report_corrector_agent
-  description: >
-    • Inputs: 
-        - stories_data        JSON produced by the Story Gnerator (combine_stories_task)
-        - validation_report   JSON from Report Validator
-    • **If** `validation_report.approved == true`  
-        → **Immediately return `stories_data` unchanged** and stop.  
-    • **Otherwise**, continue with the steps below.        
-    • **For each issue object in validation_report.issues (only when not approved):**
-        1. Read its `"location"` field (must be an RFC-6901 JSON Pointer).  
-        2. Convert pointer to a list of keys:  
-             path_segments = location.lstrip("/").split("/")  
-           e.g. "/Engagement/metrics/bounce_rate" →  
-             ["Engagement", "metrics", "bounce_rate"]
-        3. Traverse `stories_data` along `path_segments` to find the offending
-           item.  Determine its **parent block** (dimension or metrics dict).
-        4. Remove the offending item from the parent block and append it to a
-           `"discarded"` array **inside that same parent**.  
-           • If `"discarded"` does not yet exist, create it as an empty array.  
-           • Preserve all original fields of the removed item.  
-           • Add a `"reason"` key whose value is `issue.message`.
-        5. Leave all other, validated items unchanged.
-    • **Never invent new metrics, stories, or numbers.**  
-      Only relocate or annotate items flagged by the Validator.
 
-    • **Output**
-        - If `approved == true` → **exactly the original `stories_data`**  
-        - Otherwise: a corrected JSON object that retains:
-          - "Top Highlights"  
-          - four dimension blocks (Traffic, Engagement, Conversions, Revenue)  
-          - optional "discarded" arrays within any dimension that had removals 
-    • **Self-validate**  
-        Call **json_schema_check** with  
-          schema_path = "schemas/stories_data.schema.json".  
-        If the tool returns an empty issue list → return the corrected JSON.  
-        Otherwise raise an error so the crew halts. 
+  description: >
+    Inputs: 
+      • stories_data      output from the Story Generator (combine_stories_task)
+      • validation_report - output of the Report Validator  
+    Steps:
+      1. If validation_report.approved = false - for every object in
+        `validation_report.issues`  
+          •  Read its `location` field (RFC-6901 JSON Pointer, e.g.
+            `/Engagement/metrics/bounce_rate`).  
+          •  Split the pointer into path segments and traverse `stories_data`
+            to the offending item.  
+          •  Remove that item from its parent and append it to a
+            `"discarded"` array inside the same parent  
+            (create the array if it doesn't exist).  
+          •  Preserve all original fields and add a `"reason"` key set to
+            `issue.message`.  
+          •  Leave all other, validated items untouched.  
+          •  **Never** invent new metrics, stories, or numbers - only relocate or annotate items flagged by the Validator.
+      2. **Output**  
+          - If validation_report.approved = true → return the original `stories_data`.  
+          - Else → return the corrected 'stories_data' JSON that still contains:  
+              * "Top Highlights"  
+              * the four dimension blocks  
+              * any `"discarded"` arrays with attached reasons  
+      3. Finally call **json_schema_check** with  
+        `schema_path = "schemas/stories_data.schema.json"`; raise an error if
+        the schema fails and stops the pipeline. Do not output the failed output. 
+
   expected_output: >
     // ---------- TEMPLATE (repeat for Traffic, Engagement, Conversions, Revenue) ----------
     {

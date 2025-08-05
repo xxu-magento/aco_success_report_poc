@@ -4,8 +4,8 @@
 impact_analyzer_agent:
   role: ACO Success Metrics Report Impact Analyzer
   goal: >
-    Compare KPIs in the user-selected current window against an equal-length
-    reference window, quantify deltas, flag statistical significance, and
+    Obtain KPIs in the user-selected current window against an equal-length
+    reference window with already quantified deltas and statistical significances, and
     attribute changes to initiatives launched **within** the current window.
     If no initiatives launched, still report deltas and explain that shifts may
     stem from ongoing initiative effects or seasonality.
@@ -14,9 +14,6 @@ impact_analyzer_agent:
     into clear, actionable insights for merchandisers and managers. Your JSON
     output feeds the Story Generator Agent.
   tools:
-    - delta_calc
-    - baseline_variance
-    - significance_flag
     - json_schema_check
 
 # ---------- STORY GENERATOR -------------------------------------------------

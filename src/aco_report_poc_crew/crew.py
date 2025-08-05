@@ -97,7 +97,7 @@ class AcoReportPocCrew():
     def impact_analyzer_agent(self) -> Agent:
         return Agent(
             config=agents_config["impact_analyzer_agent"],
-            tools=TOOLS, #[delta_calc, baseline_variance, significance_flag, json_schema_check],
+            tools=TOOLS, #[json_schema_check],
             verbose=True,
             llm=llm,  # use shared LLM instance
         )
@@ -156,7 +156,7 @@ class AcoReportPocCrew():
                 self.generate_top_highlights_task,
                 self.generate_dimension_pages_task,
             ],
-            # callback=self.save_combine_stories_callback,
+            callback=self.save_combine_stories_callback,
         )    
 
     @task
@@ -167,7 +167,7 @@ class AcoReportPocCrew():
                 self.combine_stories_task,
                 self.analyze_impact_attribution_task,
             ],
-            # callback=self.save_validate_stories_callback,
+            callback=self.save_validate_stories_callback,
         )
 
     @task
@@ -178,7 +178,7 @@ class AcoReportPocCrew():
                 self.combine_stories_task,
                 self.validate_final_report_task,
             ],
-            # callback=self.save_correct_stories_callback,
+            callback=self.save_correct_stories_callback,
         )
 
     # ---------------- CREW ---------------------------------------------
@@ -189,8 +189,6 @@ class AcoReportPocCrew():
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
-            # agents=[self.agents[0]],
-            # tasks=[self.tasks[0]],
             process=Process.sequential,
             verbose=True,
         )

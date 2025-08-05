@@ -2,6 +2,9 @@
 
 Welcome to the AcoReportPocCrew Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
 
+## High Level Design for this project
+https://wiki.corp.adobe.com/pages/viewpage.action?pageId=3568266588
+
 ## Installation
 
 Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
@@ -20,12 +23,16 @@ crewai install
 ```
 ### Customizing
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+**Add your `OPENAI_API_KEY` into the `.env` file** There is an .env.example file to show the exacmple content.
 
 - Modify `src/aco_report_poc_crew/config/agents.yaml` to define your agents
 - Modify `src/aco_report_poc_crew/config/tasks.yaml` to define your tasks
+- Modify `src/aco_report_poc_crew/config.py` to define your configurations
 - Modify `src/aco_report_poc_crew/crew.py` to add your own logic, tools and specific args
 - Modify `src/aco_report_poc_crew/main.py` to add custom inputs for your agents and tasks
+- Modify `src/aco_report_poc_crew/debug.py` to add custom debug
+- Modify `src/aco_report_poc_crew/jsonparser.py` to do data pre-processing or post-processing 
+- Modify `schemas/...` to add more schemas for agent & task output validation 
 
 ## Running the Project
 

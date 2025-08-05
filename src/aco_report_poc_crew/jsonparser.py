@@ -23,7 +23,7 @@ def baseline_variance(*, values: MetricArray) -> float:
     """
     Sample stdev (n-1).  Returns 0 for |values| < 2.
     """
-    # print(values)
+
     return stats.stdev(values) if len(values) > 1 else 0.0
 
 
@@ -33,7 +33,7 @@ def significance_flag(*, delta: float, stdev: float,
     Heuristic significance test:  |delta|  >  sigma * stdev.
     Default ≈ 95 % confidence if data are normal.
     """
-    # print(delta, sigma, stdev, 'test')
+
     return abs(delta) > sigma * stdev
 
 
@@ -78,10 +78,7 @@ def process_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     ref   = _pivot(payload["reference_metrics"])
     curr  = _pivot(payload["current_metrics"])
 
-    initiatives = [
-        i for i in payload.get("initiatives", [])
-        if start <= datetime.fromisoformat(i["launch_timestamp"]) <= end
-    ]
+    initiatives = payload.get("initiatives", [])
 
     output: Dict[str, Any] = {}
 
@@ -108,6 +105,7 @@ def process_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     if not initiatives:        # -------- NO_INITIATIVE fallback -------- #
         init_id = "NO_INITIATIVE"
         output[init_id] = {
+            "initiative_name": "No Initiative",
             "overall": {"metrics": _enrich(overall, init_id, True)}
         }
     else:                      # -------------- per-initiative --------- #
@@ -148,6 +146,12 @@ def process_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
                                 _enrich(init_metrics, init_id, False)}
                 }
 
+    # --------------------------------------------------------------
+    # 3-C)  append the initiative list
+    # --------------------------------------------------------------
+   
+    output["initiatives"] = initiatives 
+    
     return output
 
 
@@ -170,8 +174,7 @@ def _enrich(metrics_dict: Dict[str, Any],
       "The change is very small and falls within the usual range, so it's not meaningful."        
     """
     for m, rec in metrics_dict.items():
-        # sig_field = "overall_sig" if is_no_initiative else "initiative_sig"
-        print(rec)
+        # sig_field = "overall_sig" if is_no_initiative else "initiative_sig"        
         significant_init = rec.get("initiative_sig", False)
         significant_overall = rec["overall_sig"]
 
@@ -202,16 +205,12 @@ def _enrich(metrics_dict: Dict[str, Any],
     return metrics_dict
 
 
+# if __name__ == "__main__":
+#     fixture_path = Path(__file__).parent / "data" / "test_data1.json"
+#     if not fixture_path.exists():
+#         raise FileNotFoundError(f"Fixture not found: {fixture_path}")  
 
+#     payload = json.loads(fixture_path.read_text())
 
-
-if __name__ == "__main__":
-    fixture_path = Path(__file__).parent / "data" / "test_data1.json"
-    if not fixture_path.exists():
-        raise FileNotFoundError(f"Fixture not found: {fixture_path}")  
-
-    payload = json.loads(fixture_path.read_text())
-
-
-    report = process_payload(payload)
-    print(json.dumps(report, indent=2))
+#     report = process_payload(payload)
+#     print(json.dumps(report, indent=2))

@@ -20,14 +20,14 @@ from aco_report_poc_crew.crew import AcoReportPocCrew
 
 def run() -> None:
     """Load fixture JSON, run the crew, and save the resulting report."""
-    fixture_path = Path(__file__).parent / "data" / "test_data2.json"
+    fixture_path = Path(__file__).parent / "data" / "test_data1.json"
     if not fixture_path.exists():
         raise FileNotFoundError(f"Fixture not found: {fixture_path}")  
 
     payload = json.loads(fixture_path.read_text())
     processed_payload = process_payload(payload)
 
-    print(processed_payload)
+    # print(processed_payload)
 
     result = AcoReportPocCrew().crew().kickoff(
         inputs={"payload": processed_payload, "fixture_name": fixture_path.stem}
