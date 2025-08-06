@@ -1,6 +1,6 @@
 # AcoReportPocCrew Crew
 
-Welcome to the AcoReportPocCrew Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Welcome to the AcoReportPocCrew Crew project, powered by [crewAI](https://crewai.com). 
 
 ## High Level Design for this project
 https://wiki.corp.adobe.com/pages/viewpage.action?pageId=3568266588
@@ -15,7 +15,7 @@ First, if you haven't already, install uv:
 pip install uv
 ```
 
-Next, navigate to your project directory and install the dependencies:
+Next, navigate to the project directory and install the dependencies:
 
 (Optional) Lock the dependencies and install them by using the CLI command:
 ```bash
@@ -25,18 +25,18 @@ crewai install
 
 **Add your `OPENAI_API_KEY` into the `.env` file** There is an .env.example file to show the exacmple content.
 
-- Modify `src/aco_report_poc_crew/config/agents.yaml` to define your agents
-- Modify `src/aco_report_poc_crew/config/tasks.yaml` to define your tasks
-- Modify `src/aco_report_poc_crew/config.py` to define your configurations
-- Modify `src/aco_report_poc_crew/crew.py` to add your own logic, tools and specific args
-- Modify `src/aco_report_poc_crew/main.py` to add custom inputs for your agents and tasks
+- Modify `src/aco_report_poc_crew/config/agents.yaml` to define the agents
+- Modify `src/aco_report_poc_crew/config/tasks.yaml` to define the tasks
+- Modify `src/aco_report_poc_crew/config.py` to define the configurations
+- Modify `src/aco_report_poc_crew/crew.py` to add more logic, tools and specific args
+- Modify `src/aco_report_poc_crew/main.py` to add custom inputs for the agents and tasks
 - Modify `src/aco_report_poc_crew/debug.py` to add custom debug
 - Modify `src/aco_report_poc_crew/jsonparser.py` to do data pre-processing or post-processing 
 - Modify `schemas/...` to add more schemas for agent & task output validation 
 
 ## Running the Project
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+To kickstart the crew of AI agents and begin task execution, run this from the root folder of the project:
 
 ```bash
 $ crewai run
@@ -46,10 +46,8 @@ or
 $ python -m aco_report_poc_crew.main
 ```
 
-This command initializes the ACO_Report_POC_crew Crew, assembling the agents and assigning them tasks as defined in your configuration.
+This command initializes the ACO_Report_POC_crew Crew, assembling the agents and assigning them tasks as defined in the configuration.
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+## Understanding the Crew
 
-## Understanding Your Crew
-
-The ACO_Report_POC_crew Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+The ACO_Report_POC_crew Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in the crew.
