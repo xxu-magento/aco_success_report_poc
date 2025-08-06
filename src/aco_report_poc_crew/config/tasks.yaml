@@ -27,7 +27,7 @@ analyze_impact_attribution_task:
       For every metric inside overall.metrics:
       • Look up the matching object in initiatives (same initiative_id).
       • Enrich the existing explanation with any extra context provided for that initiative.
-      • Rephrase each updated explanation so it is friendly, engaging, and crystal-clear—no jargon.
+      • Rephrase each updated explanation so it is friendly, engaging, and crystal-clear, no-jargon.
       • Never invent numbers, initiatives, or facts; only use data already in the JSON.
     • **Return** an object structured as:
          {
@@ -214,10 +214,13 @@ generate_dimension_pages_task:
             If overall_sig of any KPI under the dimension is true →
               write the narrative exactly as the following (DO NOT invent any non-existing initiatives)
               “Change may be due to ongoing impact from earlier initiatives or external factors. Consider expanding the date window.”.
+              Rephrase this sentence so it is friendly, engaging, and crystal-clear—no-jargon.
+              Never invent numbers, initiatives, or facts; only use data already in the JSON.
             Else →
               write the narrative exactly as the following 
               "The change is very small (statistically) and falls within the usual range, so it's not meaningful."
-
+              Rephrase this sentence so it is friendly, engaging, and crystal-clear—no jargon.
+              Never invent numbers, initiatives, or facts; only use data already in the JSON.
         Else → 
             Write 2-3 sentence narrative linking the change to its related initiatives. 
             Keep the tone friendly, engaging, and clear.
